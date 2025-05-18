@@ -15,11 +15,6 @@ namespace MyApp.Controllers
         {
             _context = context;
         }
-
-        /// <summary>
-        /// Gets all items
-        /// </summary>
-        /// <returns>A list of items</returns>
         [HttpGet]
         public async Task<IActionResult> GetItems()
         {
