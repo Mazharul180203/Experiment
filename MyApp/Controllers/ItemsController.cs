@@ -22,11 +22,6 @@ namespace MyApp.Controllers
             return Ok(items);
         }
 
-        /// <summary>
-        /// Gets an item by ID
-        /// </summary>
-        /// <param name="id">The ID of the item</param>
-        /// <returns>The item details</returns>
         [HttpGet("{id}")]
         public async Task<IActionResult> GetItem(int id)
         {
@@ -35,26 +30,22 @@ namespace MyApp.Controllers
             return Ok(item);
         }
 
-        /// <summary>
-        /// Creates a new item
-        /// </summary>
-        /// <param name="item">The item to create</param>
-        /// <returns>The created item</returns>
         [HttpPost]
-        public async Task<IActionResult> CreateItem([FromBody] Item item)
+        public async Task<IActionResult> CreateItem([FromBody] ItemCreate itemCreate)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            _context.Items.Add(item);
+            var Item = new Item
+            {
+                Name = itemCreate.Name,
+                Price = itemCreate.Price
+            };
+
+
+            _context.Items.Add(Item);
             await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(GetItem), new { id = item.Id }, item);
+            return CreatedAtAction(nameof(GetItem), new { id = Item.Id }, Item);
         }
 
-        /// <summary>
-        /// Updates an existing item
-        /// </summary>
-        /// <param name="id">The ID of the item to update</param>
-        /// <param name="item">The updated item data</param>
-        /// <returns>No content</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateItem(int id, [FromBody] Item item)
         {
@@ -73,11 +64,7 @@ namespace MyApp.Controllers
             }
         }
 
-        /// <summary>
-        /// Deletes an item by ID
-        /// </summary>
-        /// <param name="id">The ID of the item to delete</param>
-        /// <returns>No content</returns>
+      
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteItem(int id)
         {
