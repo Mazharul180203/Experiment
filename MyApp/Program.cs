@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.OpenApi.Models;
 using MyApp.Data;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,14 @@ builder.Services.AddSwaggerGen(c =>
     {
         Title = "IDLCFinanceAPI",
         Version = "v1",
-        Description = "API documentation"
+        Description = "API documentation",
+        TermsOfService = new Uri("https://example.com/terms"),
+        Contact = new OpenApiContact
+        {
+            Name = "Md. Mazharul Islam",
+            Email = string.Empty,
+            Url = new Uri("https://www.linkedin.com/in/shouravkumarbiswas/"),
+        },
     });
 });
 
