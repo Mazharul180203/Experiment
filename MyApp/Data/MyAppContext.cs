@@ -7,6 +7,6 @@ namespace MyApp.Data
     {
         public MyAppContext(DbContextOptions<MyAppContext> options) : base(options){ }
 
-        public DbSet<Item> Items { get; set; }
+        public DbSet<ItemDto> Items { get; set; }
     }
 }

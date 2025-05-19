@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MyApp.Data;
+using MyApp.Services;
+using MyApp.Services.Interfaces;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +12,9 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
+builder.Services.AddHttpClient();
+
+IServiceCollection serviceCollection = builder.Services.AddScoped<IAuthServices, AuthServices>();
 // Add Swagger services for API documentation
 builder.Services.AddSwaggerGen(c =>
 {

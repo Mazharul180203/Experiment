@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\NewFolder\" />
+    <ProjectReference Include="..\service\Service.csproj" />
   </ItemGroup>
 
 </Project>

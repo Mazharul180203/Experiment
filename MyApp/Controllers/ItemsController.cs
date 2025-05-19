@@ -34,7 +34,7 @@ namespace MyApp.Controllers
         public async Task<IActionResult> CreateItem([FromBody] ItemCreate itemCreate)
         {
             if (!ModelState.IsValid) return BadRequest(ModelState);
-            var Item = new Item
+            var Item = new ItemDto
             {
                 Name = itemCreate.Name,
                 Price = itemCreate.Price
@@ -47,7 +47,7 @@ namespace MyApp.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> UpdateItem(int id, [FromBody] Item item)
+        public async Task<IActionResult> UpdateItem(int id, [FromBody] ItemDto item)
         {
             if (id != item.Id) return BadRequest();
             if (!ModelState.IsValid) return BadRequest(ModelState);

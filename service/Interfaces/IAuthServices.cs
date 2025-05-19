@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace service.Interfaces
+namespace MyApp.Services.Interfaces
 {
-    internal class IAuthServices
+    public interface IAuthServices
     {
+        
     }
 }
