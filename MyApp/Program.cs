@@ -1,12 +1,11 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using MyApp.Data;
-using MyApp.Services;
-using MyApp.Services.Interfaces;
+using Service.Implementation;
+using Service.Interfaces;
 
 
 var builder = WebApplication.CreateBuilder(args);
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyAppContext>(options =>
@@ -14,7 +13,7 @@ builder.Services.AddDbContext<MyAppContext>(options =>
 
 builder.Services.AddHttpClient();
 
-IServiceCollection serviceCollection = builder.Services.AddScoped<IAuthServices, AuthServices>();
+builder.Services.AddScoped<IAuthService, AuthService>();
 // Add Swagger services for API documentation
 builder.Services.AddSwaggerGen(c =>
 {
@@ -26,9 +25,8 @@ builder.Services.AddSwaggerGen(c =>
         TermsOfService = new Uri("https://example.com/terms"),
         Contact = new OpenApiContact
         {
-            Name = "Md. Mazharul Islam",
+            Name = "Md.Mazharul Islam",
             Email = string.Empty,
-            Url = new Uri("https://www.linkedin.com/in/shouravkumarbiswas/"),
         },
     });
 });

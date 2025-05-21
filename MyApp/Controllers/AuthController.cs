@@ -6,7 +6,8 @@ using System;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using Microsoft.Extensions.Caching.Distributed;
-using MyApp.Services.Interfaces;
+using API.Dto;
+using Service.Interfaces;
 
 namespace MyApp.Controllers
 {
@@ -15,8 +16,7 @@ namespace MyApp.Controllers
     public class RegisterController : ControllerBase
     {
         private readonly MyAppContext _context;
-        private readonly IAuthServices 
-        private readonly IAuthServices<AuthController> logger;
+        private readonly IAuthService service;
         
 
         public RegisterController(MyAppContext context)
@@ -24,33 +24,38 @@ namespace MyApp.Controllers
             _context = context;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Register([FromBody] RegisterDto registerDto)
+        [HttpPost("create/register")]
+        public async Task<IActionResult> CreateRegister([FromBody] RegisterDto registerDto)
         {
+
+            try
+            {
+                 
+            }
+            catch (Exception ex){return BadRequest(new { Message = ex.Message });}
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             // Check if username or email already exists
-            if (await _context.Users.AnyAsync(u => u.Username == registerDto.Username))
+            if (await _context.Register.AnyAsync(u => u.username == registerDto.username))
             {
                 return BadRequest("Username is already taken.");
             }
 
-            if (await _context.Users.AnyAsync(u => u.Email == registerDto.Email))
+            if (await _context.Register.AnyAsync(u => u.email == registerDto.email))
             {
                 return BadRequest("Email is already registered.");
             }
 
-            // Hash the password
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.Password);
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.password_hash);
 
-            // Create new user
             var user = new User
             {
-                Username = registerDto.Username,
-                Email = registerDto.Email,
+                Username = registerDto.username,
+                Email = registerDto.email,
                 PasswordHash = passwordHash,
                 CreatedAt = DateTime.UtcNow
             };
