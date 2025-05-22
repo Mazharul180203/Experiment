@@ -19,18 +19,19 @@ namespace MyApp.Controllers
         private readonly IAuthService service;
         
 
-        public RegisterController(MyAppContext context)
+        public RegisterController(MyAppContext context, IAuthService _service)
         {
             _context = context;
+            service = _service;
         }
 
         [HttpPost("create/register")]
-        public async Task<IActionResult> CreateRegister([FromBody] RegisterDto registerDto)
+        public async Task<IActionResult> CreateRegister([FromBody] RegisterDto registerData)
         {
 
             try
             {
-                 
+                return await getResponse(await service.AddCreateRequest(registerData));
             }
             catch (Exception ex){return BadRequest(new { Message = ex.Message });}
 

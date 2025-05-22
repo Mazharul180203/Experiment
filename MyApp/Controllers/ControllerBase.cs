@@ -15,9 +15,6 @@ namespace API.Controllers
             response.Data = Data;
 
             return Content(new JSONSerialize().getJSONSFromObject(response, true), "application/json");
-
-            //return Json(response);
         }
-
     }
 }
