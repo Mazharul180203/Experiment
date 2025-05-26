@@ -13,7 +13,7 @@ namespace MyApp.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class RegisterController : ControllerBase
+    public class RegisterController : API.Controllers.ControllerBase
     {
         private readonly MyAppContext _context;
         private readonly IAuthService service;
