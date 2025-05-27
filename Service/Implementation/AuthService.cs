@@ -1,18 +1,49 @@
 ﻿using Service.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
+using MyApp.Models;
+using Microsoft.EntityFrameworkCore;
 using API.Dto;
+using MyApp.Models;
+using System;
+using System.Threading.Tasks;
+using BCrypt.Net;
+using Microsoft.Extensions.Caching.Distributed;
+using MyApp.Data;
+using Microsoft.Win32;
 
 namespace Service.Implementation
 {
     public class AuthService : IAuthService
     {
-        public Task<object> AddCreateRequest(RegisterDto data)
+
+        private readonly MyAppContext _context;
+
+        public AuthService(MyAppContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+
+        public async Task<object> AddCreateRequest(RegisterDto data)
+        {
+            if (await _context.Register.AnyAsync(u => u.email == data.email))
+            {
+                return ("User is already exist!");
+            }
+
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(data.password_hash);
+
+            var userRegister = new RegisterDto
+            {
+                username = data.username,
+                email = data.email,
+                password_hash = passwordHash,
+                created_at = DateTime.UtcNow
+            };
+
+            _context.Register.Add(userRegister);
+            await _context.SaveChangesAsync();
+
+            return ("User registered successfully.");
         }
     }
 }

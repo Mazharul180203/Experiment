@@ -8,6 +8,7 @@ using BCrypt.Net;
 using Microsoft.Extensions.Caching.Distributed;
 using API.Dto;
 using Service.Interfaces;
+using Service.Implementation;   
 
 namespace MyApp.Controllers
 {
@@ -26,46 +27,18 @@ namespace MyApp.Controllers
         }
 
         [HttpPost("create/register")]
-        public async Task<IActionResult> CreateRegister([FromBody] RegisterDto registerData)
+        public async Task<IActionResult> CreateRegister([FromBody] RegisterDto data)
         {
 
             try
             {
-                return await getResponse(await service.AddCreateRequest(registerData));
+                return await getResponse(await service.AddCreateRequest(data));
             }
-            catch (Exception ex){return BadRequest(new { Message = ex.Message });}
-
-            if (!ModelState.IsValid)
+            catch (Exception ex)
             {
-                return BadRequest(ModelState);
+                return BadRequest(new { Message = ex.Message });
             }
-
-            // Check if username or email already exists
-            if (await _context.Register.AnyAsync(u => u.username == registerDto.username))
-            {
-                return BadRequest("Username is already taken.");
-            }
-
-            if (await _context.Register.AnyAsync(u => u.email == registerDto.email))
-            {
-                return BadRequest("Email is already registered.");
-            }
-
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(registerDto.password_hash);
-
-            var user = new User
-            {
-                Username = registerDto.username,
-                Email = registerDto.email,
-                PasswordHash = passwordHash,
-                CreatedAt = DateTime.UtcNow
-            };
-
-            // Save user to database
-            _context.Users.Add(user);
-            await _context.SaveChangesAsync();
-
-            return Ok(new { Message = "User registered successfully." });
+ 
         }
     }
 
