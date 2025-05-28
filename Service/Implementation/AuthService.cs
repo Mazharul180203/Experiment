@@ -25,25 +25,34 @@ namespace Service.Implementation
 
         public async Task<object> AddCreateRequest(RegisterDto data)
         {
-            if (await _context.Register.AnyAsync(u => u.email == data.email))
+            try
             {
-                return ("User is already exist!");
+                if (await _context.Register.AnyAsync(u => u.email == data.email))
+                {
+                    return ("User is already exist!");
+                }
+
+                var passwordHash = BCrypt.Net.BCrypt.HashPassword(data.password_hash);
+
+                var userRegister = new RegisterDto
+                {
+                    username = data.username,
+                    email = data.email,
+                    password_hash = passwordHash,
+                    created_at = DateTime.Now,
+                    last_login = DateTime.Now,
+                    updated_at = DateTime.Now
+                    
+                };
+
+                _context.Register.Add(userRegister);
+                await _context.SaveChangesAsync();
+                return ("User registered successfully.");
             }
-
-            var passwordHash = BCrypt.Net.BCrypt.HashPassword(data.password_hash);
-
-            var userRegister = new RegisterDto
+            catch (Exception ex)
             {
-                username = data.username,
-                email = data.email,
-                password_hash = passwordHash,
-                created_at = DateTime.UtcNow
-            };
-
-            _context.Register.Add(userRegister);
-            await _context.SaveChangesAsync();
-
-            return ("User registered successfully.");
+                return ($"An error occurred: {ex.Message}");
+            }
         }
     }
 }

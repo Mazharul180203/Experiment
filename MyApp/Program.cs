@@ -12,8 +12,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyAppContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
-builder.Services.AddDbContext<MyAppContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+//builder.Services.AddDbContext<MyAppContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
 
 builder.Services.AddHttpClient();
 
