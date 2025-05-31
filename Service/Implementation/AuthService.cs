@@ -1,15 +1,7 @@
 ﻿using Service.Interfaces;
 using System.Threading.Tasks;
-using MyApp.Models;
 using Microsoft.EntityFrameworkCore;
-using API.Dto;
-using MyApp.Models;
-using System;
-using System.Threading.Tasks;
-using BCrypt.Net;
-using Microsoft.Extensions.Caching.Distributed;
-using MyApp.Data;
-using Microsoft.Win32;
+using Data.Dto;
 
 namespace Service.Implementation
 {

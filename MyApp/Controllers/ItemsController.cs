@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Data.DBContexts;
+using Data.Dto;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Data;
+
 using MyApp.Models;
 
 namespace MyApp.Controllers

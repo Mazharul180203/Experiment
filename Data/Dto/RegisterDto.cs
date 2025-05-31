@@ -1,6 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace API.Dto
+namespace Data.Dto
 {
     public class RegisterDto
     {
@@ -13,7 +18,7 @@ namespace API.Dto
         public DateTime updated_at { get; set; }
         public bool is_active { get; set; }
         public bool email_verified { get; set; }
-        public DateTime last_login { get; set; } 
+        public DateTime last_login { get; set; }
         public string role { get; set; }
     }
 }

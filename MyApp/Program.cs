@@ -1,16 +1,20 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
-using MyApp.Data;
 using Service.Implementation;
 using Service.Interfaces;
+using Data.DBContexts;
 
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<MyAppContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));
+{
+    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+    options.UseSqlServer(connectionString);
+});
+
 
 //builder.Services.AddDbContext<MyAppContext>(options =>
 //    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectionString")));

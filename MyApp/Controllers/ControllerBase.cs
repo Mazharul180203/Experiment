@@ -1,6 +1,7 @@
-﻿using API.Dto;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Data.Dto;
 using Utility;
 
 namespace API.Controllers

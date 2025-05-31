@@ -1,8 +1,12 @@
-﻿using API.Dto;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Data.Dto;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Models;
 
-namespace MyApp.Data
+namespace Data.DBContexts
 {
     public class MyAppContext : DbContext
     {

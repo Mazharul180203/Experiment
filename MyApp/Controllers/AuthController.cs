@@ -1,12 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using MyApp.Data;
 using MyApp.Models;
 using System;
 using System.Threading.Tasks;
 using BCrypt.Net;
 using Microsoft.Extensions.Caching.Distributed;
-using API.Dto;
+using Data.Dto;
+using Data.DBContexts;
+using Data.Dto;
 using Service.Interfaces;
 using Service.Implementation;   
 
